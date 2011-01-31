@@ -34,6 +34,33 @@
 				<onclick>Skin.ToggleSetting(NoWatchedFlags)</onclick>
 				<selected>Skin.HasSetting(NoWatchedFlags)</selected>
 			</control>
+			<control type="radiobutton" id="2022">
+				<label>[COLOR=WhiteTrans]Wait before showing info: [/COLOR]Don't wait</label>
+				<onclick>Skin.Reset(WaitShort)</onclick>
+				<onclick>Skin.ToggleSetting(NoWait)</onclick>
+				<selected>Skin.HasSetting(NoWait)</selected>
+			</control>
+			<control type="radiobutton" id="2023">
+				<label>[COLOR=WhiteTrans]Wait before showing info: [/COLOR]Wait for 1 second</label>
+				<onclick>Skin.Reset(NoWait)</onclick>
+				<onclick>Skin.ToggleSetting(WaitShort)</onclick>
+				<selected>Skin.HasSetting(WaitShort)</selected>
+			</control>
+			<control type="radiobutton" id="2024">
+				<label>[COLOR=WhiteTrans]Wait before showing info: [/COLOR]Wait for 3 seconds</label>
+				<onclick>Skin.Reset(NoWait)</onclick>
+				<onclick>Skin.Reset(WaitShort)</onclick>
+				<selected>!Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)</selected>
+			</control>
+			<control type="image">
+				<posy>0</posy>
+				<posx>0</posx>
+				<width>510</width>
+				<height>1</height>
+				<texture>white.png</texture>
+				<aspectratio>scale</aspectratio>
+				<colordiffuse>WhiteTrans</colordiffuse>
+			</control>
 		</control>
 	</controls>
 </window>

@@ -7,7 +7,7 @@
 			<control type="grouplist">
 				<animation effect="fade" start="0" end="100" delay="280" time="100">Visible</animation>
 				<animation effect="fade" start="100" end="0" delay="0" time="100">Hidden</animation>
-				<visible>System.IdleTime(3) + Container.Content(Movies)</visible>
+				<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + Container.Content(Movies)</visible>
 				<posx>90</posx>
 				<posy>340</posy>
 				<itemgap>5</itemgap>
@@ -190,7 +190,7 @@
 			<control type="grouplist">
 				<animation effect="fade" start="0" end="100" delay="280" time="100">Visible</animation>
 				<animation effect="fade" start="100" end="0" delay="0" time="100">Hidden</animation>
-				<visible>System.IdleTime(3) + Container.Content(tvshows)</visible>
+				<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + Container.Content(tvshows)</visible>
 				<posx>90</posx>
 				<posy>340</posy>
 				<itemgap>5</itemgap>
@@ -337,7 +337,7 @@
 			<control type="grouplist">
 				<animation effect="fade" start="0" end="100" delay="280" time="100">Visible</animation>
 				<animation effect="fade" start="100" end="0" delay="0" time="100">Hidden</animation>
-				<visible>System.IdleTime(3) + Container.Content(episodes)</visible>
+				<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + Container.Content(episodes)</visible>
 				<posx>90</posx>
 				<posy>340</posy>
 				<itemgap>5</itemgap>
@@ -520,7 +520,7 @@
 			<control type="grouplist">
 				<animation effect="fade" start="0" end="100" delay="280" time="100">Visible</animation>
 				<animation effect="fade" start="100" end="0" delay="0" time="100">Hidden</animation>
-				<visible>System.IdleTime(3) + !Container.Content(movies) + !Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)</visible>
+				<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + !Container.Content(movies) + !Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)</visible>
 				<posx>90</posx>
 				<posy>340</posy>
 				<itemgap>5</itemgap>
@@ -593,9 +593,13 @@
 					<effect type="rotatey" start="0" end="-10" center="0,0" time="300"/>
 					<effect type="zoom" start="100" end="120" center="0,0" time="300"/>
 				</animation>
-				<animation type="Conditional" condition="System.IdleTime(3) + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]">
+				<animation type="Conditional" condition="[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)]] + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]">
 					<effect type="rotatey" start="0" end="12" center="0,0" time="300"/>
 					<effect type="zoom" start="100" end="50" center="280,0" time="300"/>
+				</animation>
+				<animation type="Conditional" condition="Skin.HasSetting(NoWait) + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]">
+					<effect type="rotatey" start="0" end="12" center="0,0" time="0"/>
+					<effect type="zoom" start="100" end="50" center="280,0" time="0"/>
 				</animation>
 				<control type="group">
 					<posx>10</posx>
@@ -612,7 +616,7 @@
 						<info>ListItem.Thumb</info>
 					</control>
 					<control type="image">
-						<visible>Container.OnPrevious</visible>
+						<visible>Container.OnPrevious + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -633,7 +637,7 @@
 						<info>Container.ListItem(-1).Thumb</info>
 					</control>
 					<control type="image">
-						<visible>!Container.OnNext + !Container.OnPrevious</visible>
+						<visible>!Container.OnNext + !Container.OnPrevious + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -642,10 +646,10 @@
 						<texture flipy="true" diffuse="DiffuseMirror.png"/>
 						<aspectratio aligny="top">keep</aspectratio>
 						<info>ListItem.Thumb</info>
-						<animation effect="fade" start="100" end="0" time="200" condition="System.IdleTime(3) + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]">Conditional</animation>
+						<animation effect="fade" start="100" end="0" time="200" condition="[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]">Conditional</animation>
 					</control>
 					<control type="image">
-						<visible>System.IdleTime(3) + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]]</visible>
+						<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + [[Container.Content(Movies) | Container.Content(episodes) | Container.Content(tvshows)] |[!Container.Content(episodes) + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(albums) + !Container.Content(songs) + !Container.Content(artists) + !IsEmpty(ListItem.Plot)]] + !Container.OnNext + !Container.OnPrevious </visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -655,8 +659,30 @@
 						<aspectratio aligny="top">keep</aspectratio>
 						<info>ListItem.Thumb</info>
 					</control>
+					<control>
+						<visible>Skin.HasSetting(NoWait) + Container.OnNext</visible>
+						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
+						<posx>0</posx>
+						<posy>434</posy>
+						<width>506</width>
+						<height>434</height>
+						<texture flipy="true" diffuse="DiffuseMirror3.png"/>
+						<aspectratio aligny="top">keep</aspectratio>
+						<info>Container.ListItem(-1).Thumb</info>
+					</control>
+					<control>
+						<visible>Skin.HasSetting(NoWait) + Container.OnPrevious</visible>
+						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
+						<posx>0</posx>
+						<posy>434</posy>
+						<width>506</width>
+						<height>434</height>
+						<texture flipy="true" diffuse="DiffuseMirror3.png"/>
+						<aspectratio aligny="top">keep</aspectratio>
+						<info>Container.ListItem(1).Thumb</info>
+					</control>
 					<control type="image">
-						<visible>Container.OnNext</visible>
+						<visible>Container.OnNext + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -692,7 +718,7 @@
 						<info>ListItem.Property(fanart_image)</info>
 					</control>
 					<control type="image">
-						<visible>Container.OnPrevious</visible>
+						<visible>Container.OnPrevious + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -713,7 +739,7 @@
 						<info>Container.ListItem(-1).Property(fanart_image)</info>
 					</control>
 					<control type="image">
-						<visible>!Container.OnNext + !Container.OnPrevious</visible>
+						<visible>!Container.OnNext + !Container.OnPrevious + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -722,10 +748,32 @@
 						<texture flipy="true" diffuse="DiffuseMirror.png"/>
 						<aspectratio aligny="top">keep</aspectratio>
 						<info>ListItem.Property(fanart_image)</info>
-						<animation effect="fade" start="100" end="0" time="200" condition="System.IdleTime(3) + Container.Content(tvshows)">Conditional</animation>
+						<animation effect="fade" start="100" end="0" time="200" condition="[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + Container.Content(tvshows)">Conditional</animation>
+					</control>
+					<control>
+						<visible>Skin.HasSetting(NoWait) + Container.OnNext</visible>
+						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
+						<posx>0</posx>
+						<posy>434</posy>
+						<width>506</width>
+						<height>434</height>
+						<texture flipy="true" diffuse="DiffuseMirror3.png"/>
+						<aspectratio aligny="top">keep</aspectratio>
+						<info>Container.ListItem(-1).Property(fanart_image)</info>
+					</control>
+					<control>
+						<visible>Skin.HasSetting(NoWait) + Container.OnPrevious</visible>
+						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
+						<posx>0</posx>
+						<posy>434</posy>
+						<width>506</width>
+						<height>434</height>
+						<texture flipy="true" diffuse="DiffuseMirror3.png"/>
+						<aspectratio aligny="top">keep</aspectratio>
+						<info>Container.ListItem(1).Property(fanart_image)</info>
 					</control>
 					<control type="image">
-						<visible>Container.OnNext</visible>
+						<visible>Container.OnNext + !Skin.HasSetting(NoWait)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
@@ -746,7 +794,7 @@
 						<aspectratio aligny="bottom">keep</aspectratio>
 					</control>
 					<control type="image">
-						<visible>System.IdleTime(3) + Container.Content(tvshows)</visible>
+						<visible>[[System.IdleTime(3) + !Skin.HasSetting(WaitShort) + !Skin.HasSetting(NoWait)] | [System.IdleTime(1) + Skin.HasSetting(WaitShort)] | Skin.HasSetting(NoWait)] + Container.Content(tvshows)</visible>
 						<animation effect="fade" end="100" start="0" time="600" delay="0" reversible="false">VisibleChange</animation>
 						<posx>0</posx>
 						<posy>434</posy>
